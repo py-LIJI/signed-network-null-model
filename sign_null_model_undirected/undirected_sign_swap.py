@@ -50,9 +50,7 @@ def sign_network_sign_swap(G0, nswap=1, max_tries=100):
                 continue
             
             #该部分进行符号置乱
-            G[u][v]['weight']
-            G[x][y]['weight'] = G[x][y]['weight']
-            G[u][v]['weight']
+            G[u][v]['weight'], G[x][y]['weight'] = G[x][y]['weight'], G[u][v]['weight']
             if G[u][v]['weight'] != G[x][y]['weight']:
                 swapcount += 1
         
