@@ -1,5 +1,5 @@
 """
-包含5种符号网络零模型：
+包含5种无向符号网络零模型：
     正边随机置乱零模型
     负边随机置乱零模型
     正负边分别随机置乱零模型
@@ -48,11 +48,11 @@ def undirected_positive_swap(G0, nswap=1, max_tries=100):
             continue
 
         # 对原网络进行断边交换重连
-        # 条件是将要断边的边uv、xy必须是正边，将要重连的边ux、vy开始不能存在
-        if ((x not in G[u]) and (y not in G[v]) and G[u][v]['weight'] == 1
+        # 条件是将要断边的边uv、xy必须是正边，将要重连的边uy、xv开始不能存在
+        if ((y not in G[u]) and (v not in G[x]) and G[u][v]['weight'] == 1
                 and G[x][y]['weight'] == 1):
-            G.add_edge(u, x, weight=1)
-            G.add_edge(v, y, weight=1)
+            G.add_edge(u, y, weight=1)
+            G.add_edge(x, v, weight=1)
             G.remove_edge(u, v)
             G.remove_edge(x, y)
             swapcount += 1  # 成功置乱次数+1
@@ -105,11 +105,11 @@ def undirected_negative_swap(G0, nswap=1, max_tries=100):
             continue
 
         # 进行断边交换重连
-        # 条件是将要断边的边uv、xy必须是负边，将要重连的边ux、vy开始不能存在
-        if ((x not in G[u]) and (y not in G[v]) and G[u][v]['weight'] == 2
+        # 条件是将要断边的边uv、xy必须是负边，将要重连的边uy、xv开始不能存在
+        if ((y not in G[u]) and (v not in G[x]) and G[u][v]['weight'] == 2
                 and G[x][y]['weight'] == 2):
-            G.add_edge(u, x, weight=2)
-            G.add_edge(v, y, weight=2)
+            G.add_edge(u, y, weight=2)
+            G.add_edge(x, v, weight=2)
             G.remove_edge(u, v)
             G.remove_edge(x, y)
             swapcount += 1  # 成功置乱次数+1
@@ -175,10 +175,10 @@ def undirected_full_swap(G0, nswap=1, max_tries=100):
             continue
 
         # 进行断边交换重连
-        # 条件是将要重连的边ux、vy开始不能存在
-        if (x not in G[u]) and (y not in G[v]):
-            G.add_edge(u, x, weight=G[u][v]['weight'])
-            G.add_edge(v, y, weight=G[x][y]['weight'])
+        # 条件是将要重连的边uy、xv开始不能存在
+        if (y not in G[u]) and (v not in G[x]):
+            G.add_edge(u, y, weight=G[u][v]['weight'])
+            G.add_edge(x, v, weight=G[x][y]['weight'])
             G.remove_edge(u, v)
             G.remove_edge(x, y)
             swapcount += 1  # 成功置乱次数+1
